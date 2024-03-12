@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University Data in the Philippines</title>
+  </head>
+  <body>
+    <div class="title"></div>
+    <h1>List of Universities in the Philippines</h1>
+    <div class="container">
+      <table id="List">
+        <tr>
+          <th>Name</th>
+          <th>Country</th>
+          <th>Domains</th>
+          <th>Web Pages</th>
+        </tr>
+      </table>
+    </div>
+    <script>
+      fetch("http://universities.hipolabs.com/search?country=philippines")
+        .then((response) => response.json())
+        .then((data) => {
+          const universityTable = document.getElementById("List");
+          data.forEach((university) => {
+            const row = universityTable.insertRow(-1);
+            row.insertCell(0).textContent = university.name;
+            row.insertCell(1).textContent = university.country;
+            row.insertCell(2).textContent = university.domains.join(", ");
+            row.insertCell(3).textContent = university.web_pages.join(", ");
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    </script>
+  </body>
+</html>
